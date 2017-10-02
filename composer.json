@@ -1,18 +1,17 @@
 {
-    "name": ":vendor/:package_name",
+    "name": "zakclayton/php-mapbox",
     "type": "library",
-    "description": ":package_description",
+    "description": "A PHP Wrapper for the Mapbox JS cURL API",
     "keywords": [
-        ":vendor",
-        ":package_name"
+        "mapbox",
     ],
     "homepage": "https://github.com/:vendor/:package_name",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": ":author_email",
-            "homepage": ":author_website",
+            "name": "Zak Clayton",
+            "email": "zak@24kdesign.co.uk",
+            "homepage": "https://zakclayton.com",
             "role": "Developer"
         }
     ],
@@ -25,12 +24,12 @@
     },
     "autoload": {
         "psr-4": {
-            ":vendor\\:package_name\\": "src"
+            "ZakClayton\\PHPMapbox\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            ":vendor\\:package_name\\": "tests"
+            "ZakClayton\\PHPMapbox\\Test\\": "tests"
         }
     },
     "scripts": {
