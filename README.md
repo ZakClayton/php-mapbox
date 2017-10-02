@@ -1,4 +1,5 @@
-# :package_name
+# php-mapbox
+A PHP Wrapper for the MapboxJS cURL API
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
