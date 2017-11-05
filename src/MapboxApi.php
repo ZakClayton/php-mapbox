@@ -4,11 +4,13 @@ namespace ZakClayton\Mapbox;
 
 use ZakClayton\Mapbox\Api\GeoCoding;
 use GuzzleHttp\Client;
+use ZakClayton\Mapbox\Exceptions\MapboxException;
 
 /**
  *
  *
  * @class MapboxApi
+ * @package ZakClayton\Mapbox
  */
 class MapboxApi
 {
@@ -95,16 +97,14 @@ class MapboxApi
     /**
      * Create GeoCoding Api Call
      *
-     * @param string Mode - Set the mode for the API
      * @param string Query - The Query String for the API
+     * @param array Params - Any additional Options set for the API
      */
-    public function createGeoCodingApi($mode = null, $query = null) {
-        $api = new GeoCoding($mode, $query);
-
+    public function createGeoCodingApi($query = null, $params = array()) {
+        $api = new GeoCoding($query, $params);
         if (!$this->getHttpClient()) {
             $this->setHttpClient();
         }
-
         return $api->registerMapboxApi($this);
     }
 

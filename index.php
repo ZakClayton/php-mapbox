@@ -17,10 +17,8 @@ try {
     ]);
 
     $mapbox = new MapboxApi(getenv('MAPBOX_ACCESS_TOKEN'));
-
-    $geoCodingApi = $mapbox->createGeoCodingApi('mapbox.places','Lingfield');
-
-    var_dump(json_decode($geoCodingApi->call()->getBody()));
+    $geoCodingApi = $mapbox->createGeoCodingApi('Lingfield, RH7 6NG', array('type'=>'address','country'=>'GB'));
+    var_dump($geoCodingApi->getJson());
 
 } catch (MapboxException $e) {
 

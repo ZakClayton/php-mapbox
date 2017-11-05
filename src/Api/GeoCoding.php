@@ -24,10 +24,13 @@ class GeoCoding extends Api {
     protected $version = 'v5';
 
     /** @var string Select GeoCoding Mode */
-    protected $mode;
+    protected $mode = 'mapbox.places';
 
     /** @var string GeoCoding Query String */
     protected $query;
+
+    /** @var array GeoCoding Parameters Array */
+    protected $params;
 
     /** @var MapboxApi The Parent Class */
     protected $mapboxApi;
@@ -38,19 +41,12 @@ class GeoCoding extends Api {
     /**
      * Constructor
      */
-    public function __construct($mode = null, $query = null) {
-
-        if (empty($mode)) {
-            throw new MapboxException('Parameter $mode is Required, GeoCoding($mode, $query)');
-        }
-
-        if (empty($mode)) {
+    public function __construct($query = null, $params = array()) {
+        if (empty($query)) {
             throw new MapboxException('Parameter $query is Required, GeoCoding($mode, $query)');
         }
-
-        $this->mode  = $mode;
         $this->query = $query;
-
+        $this->params = $params;
     }
 
     /**
@@ -81,15 +77,33 @@ class GeoCoding extends Api {
 
         $url .= '?access_token=' . $this->mapboxApi->getToken();
 
+        if(!empty($this->params)) {
+            $url .= $this->makeParametersQueryString($this->params);
+        }
+
         return $url;
 
     }
 
     /**
+     * Convert parameter array into query string
+     *
+     */
+    public function makeParametersQueryString($params = array()) {
+        if(!empty($params)) {
+            $queryStr = '';
+            foreach ($params as $key => $value) {
+                $queryStr .= "&{$key}={$value}";
+            }
+            return $queryStr;
+        }
+        return ;
+    }
+
+    /**
      * Make API call, retrieve JSON response with data or error.
      *
-     * @todo Create EntityFactory 
-     * @return json API Response
+     * @todo Create EntityFactory
      */
     public function call() {
         try {
@@ -98,6 +112,17 @@ class GeoCoding extends Api {
         } catch ( MapboxException $e ) {
 
         }
+    }
+
+    /**
+     * Make API call and return JSON
+     *
+     * @return json API Response
+     */
+    public function getJson() {
+        $response = $this->call();
+        if($response->getBody()) return json_decode($response->getBody());
+        return '{}';
     }
 
 }

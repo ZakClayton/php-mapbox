@@ -1,12 +1,12 @@
 <?php
 
-namespace ZakClayton\Mapbox\Exception;
+namespace ZakClayton\Mapbox\Exceptions;
 
 /**
  * Class MapboxException
  * @package ZakClayton\Mapbox\Exception
  */
-class MapboxException extends \Exception
-{
+class MapboxException extends \Exception {
+
 
 }

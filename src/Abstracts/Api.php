@@ -4,6 +4,7 @@ namespace ZakClayton\Mapbox\Abstracts;
 
 use ZakClayton\Mapbox\MapboxApi;
 use ZakClayton\Mapbox\Traits\MapboxApiAware;
+use ZakClayton\Mapbox\Exceptions\MapboxException;
 
 /**
  * Class Api
@@ -34,8 +35,8 @@ abstract class Api implements \ZakClayton\Mapbox\Interfaces\Api {
 
     public function __construct($url) {
         $url = trim((string)$url);
-        if (strlen($url) < 4) {
-            throw new \InvalidArgumentException(
+        if (strlen($url) <= 4) {
+            throw new MapboxException(
                 'URL must be a string of at least four characters in length'
             );
         }
