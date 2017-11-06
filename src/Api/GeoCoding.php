@@ -72,9 +72,7 @@ class GeoCoding extends Api {
         }
 
         $url .= '/' . trim($this->mode, '/') ;
-
         $url .= '/' . trim($this->query, '/') . '.' . $this->format;
-
         $url .= '?access_token=' . $this->mapboxApi->getToken();
 
         if(!empty($this->params)) {
@@ -121,8 +119,20 @@ class GeoCoding extends Api {
      */
     public function getJson() {
         $response = $this->call();
-        if($response->getBody()) return json_decode($response->getBody());
+        if($response->getBody()) return $response->getBody();
         return '{}';
     }
+
+    /**
+     * Make API call and return PHP Object
+     *
+     * @return object API Response
+     */
+    public function getObject() {
+        $response = $this->call();
+        if($response->getBody()) return json_decode($response->getBody());
+        return false;
+    }
+
 
 }
