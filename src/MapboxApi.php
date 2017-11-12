@@ -2,9 +2,11 @@
 
 namespace ZakClayton\Mapbox;
 
-use ZakClayton\Mapbox\Api\GeoCoding;
 use GuzzleHttp\Client;
 use ZakClayton\Mapbox\Exceptions\MapboxException;
+use ZakClayton\Mapbox\Factory\Entity;
+use ZakClayton\Mapbox\Interfaces\EntityFactory;
+use ZakClayton\Mapbox\Api\GeoCoding;
 
 /**
  *
@@ -23,6 +25,9 @@ class MapboxApi
 
     /** @var GuzzleHttp $client */
     protected $client;
+
+    /** @var  EntityFactory The Factory which created Entities from Responses */
+    protected $factory;
 
     /**
      * Create a new Skeleton Instance
@@ -95,15 +100,41 @@ class MapboxApi
     }
 
     /**
+     * Sets the Entity Factory which will create the Entities from Responses
+     * @param EntityFactory $factory
+     * @return $this
+     */
+    public function setEntityFactory(EntityFactory $factory = null)
+    {
+        if ($factory === null) {
+            $factory = new Entity();
+        }
+        $this->factory = $factory;
+        return $this;
+    }
+    /**
+     * Returns the Factory responsible for creating Entities from Responses
+     * @return EntityFactory
+     */
+    public function getEntityFactory()
+    {
+        return $this->factory;
+    }
+
+    /**
      * Create GeoCoding Api Call
      *
      * @param string Query - The Query String for the API
      * @param array Params - Any additional Options set for the API
+     * @return $this
      */
     public function createGeoCodingApi($query = null, $params = array()) {
         $api = new GeoCoding($query, $params);
         if (!$this->getHttpClient()) {
             $this->setHttpClient();
+        }
+        if (!$this->getEntityFactory()) {
+            $this->setEntityFactory();
         }
         return $api->registerMapboxApi($this);
     }

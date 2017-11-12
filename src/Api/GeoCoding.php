@@ -2,6 +2,7 @@
 
 namespace ZakClayton\Mapbox\Api;
 
+use ZakClayton\Mapbox\Exceptions\MapboxException;
 use ZakClayton\Mapbox\MapboxApi;
 use ZakClayton\Mapbox\Abstracts\Api;
 use ZakClayton\Mapbox\Traits\MapboxApiAware;
@@ -108,7 +109,7 @@ class GeoCoding extends Api {
             $ei = parent::call();
             return $ei;
         } catch ( MapboxException $e ) {
-
+            print "Something went wrong: " . $e;
         }
     }
 
@@ -118,21 +119,9 @@ class GeoCoding extends Api {
      * @return json API Response
      */
     public function getJson() {
-        $response = $this->call();
-        if($response->getBody()) return $response->getBody();
+        $response = $this->call()->getResponse();
+        if($response) return $response;
         return '{}';
     }
-
-    /**
-     * Make API call and return PHP Object
-     *
-     * @return object API Response
-     */
-    public function getObject() {
-        $response = $this->call();
-        if($response->getBody()) return json_decode($response->getBody());
-        return false;
-    }
-
 
 }

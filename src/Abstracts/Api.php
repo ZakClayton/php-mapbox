@@ -117,6 +117,11 @@ abstract class Api implements \ZakClayton\Mapbox\Interfaces\Api {
      * @return json $response
      */
     public function call() {
-        return $this->mapboxApi->getHttpClient()->request($this->method, $this->buildUrl());
+        $response = $this->mapboxApi->getHttpClient()->request($this->method, $this->buildUrl());
+
+        return $this
+            ->mapboxApi
+            ->getEntityFactory()
+            ->createAppropriateEntityIterator($response);
     }
 }
