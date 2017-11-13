@@ -4,25 +4,10 @@ A PHP Wrapper for the MapboxJS cURL API
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
-[![Total Downloads][ico-downloads]][link-downloads]
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+This package aims to take the API provided by Mapbox and create a simple PHP wrapper that allows you to call various different endpoints and return the results in various formats.
 
-## Structure
-
-If any of the following are applicable to your project, then the directory structure should follow industry best practises by being named the following.
-
-```
-bin/        
-config/
-src/
-tests/
-vendor/
-```
-
+*At the moment this API will only return Geocoding results. Additional elements will be built on an as needed basis.*
 
 ## Install
 
@@ -35,23 +20,24 @@ $ composer require zakclayton/php-mapbox
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$query        = 'The Statue of Liberty';
+$mapbox       = new MapboxApi(MAPBOX_ACCESS_TOKEN);
+$geoCodingApi = $mapbox->createGeoCodingApi($query);
+$json         = $geoCodingApi->getJson();
+$entity       = $geoCodingApi->call();
 ```
 
-## Change log
+## Parameters
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+Coming soon.
 
 ## Testing
+
+Tests are currently being written. Use this package with caution!
 
 ``` bash
 $ composer test
 ```
-
-## Contributing
-
-Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT.md) for details.
 
 ## Security
 
